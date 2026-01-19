@@ -1,0 +1,114 @@
+{
+  "design": "MemPool_group",
+  "pdk": "Nangate45",
+  "known_info": {
+    "macro_count": 324,
+    "macro_type": "mixed varying SRAM sizes",
+    "approx_macro_size_um": [
+      55.1,
+      33.6
+    ],
+    "canvas_size_um": [
+      800.0,
+      800.0
+    ],
+    "stdcells_flops": "~361K"
+  },
+  "parsed_lef_macros": {
+    "fakeram45_32x32": {
+      "width": 55.1,
+      "height": 33.6
+    },
+    "fakeram45_256x48": {
+      "width": 64.03,
+      "height": 207.2
+    },
+    "fakeram45_256x16": {
+      "width": 57.57,
+      "height": 133.0
+    },
+    "fakeram45_128x32": {
+      "width": 59.66,
+      "height": 82.6
+    },
+    "fakeram45_512x64": {
+      "width": 110.01,
+      "height": 238.0
+    },
+    "fakeram45_64x256": {
+      "width": 108.87,
+      "height": 175.0
+    },
+    "fakeram45_128x116": {
+      "width": 121.03,
+      "height": 117.6
+    },
+    "fakeram45_128x256": {
+      "width": 153.71,
+      "height": 238.0
+    },
+    "fakeram45_64x62": {
+      "width": 56.05,
+      "height": 102.2
+    },
+    "fakeram45_256x64": {
+      "width": 109.06,
+      "height": 166.6
+    },
+    "fakeram45_64x124": {
+      "width": 80.56,
+      "height": 121.8
+    },
+    "fakeram45_256x32": {
+      "width": 60.61,
+      "height": 169.4
+    },
+    "fakeram45_64x64": {
+      "width": 56.05,
+      "height": 102.2
+    }
+  },
+  "source_files": {
+    "primary_rtl": null,
+    "rtl_paths": [],
+    "sv2v_paths": [],
+    "note": "Ariane designs often use sv2v-converted files for Yosys/OpenROAD compatibility."
+  },
+  "netlist_path": null,
+  "files": {
+    "lef": [
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_32x32.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_256x48.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_256x16.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_128x32.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_512x64.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/NangateOpenCellLibrary.tech.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_64x256.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_128x116.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_128x256.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/NangateOpenCellLibrary.macro.mod.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_64x62.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_256x64.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_64x124.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_256x32.lef",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lef/fakeram45_64x64.lef"
+    ],
+    "lib": [
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_64x62.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/NangateOpenCellLibrary_typical.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_64x64.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_128x32.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_512x64.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_256x16.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_32x32.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_64x124.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_64x256.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_256x64.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_256x32.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_128x256.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_256x48.lib",
+      "/home/quantap/Documents/projects_/yearly-project/hierarchical-marl-chip-placement/data/datasets/MacroPlacement/Enablements/NanGate45/lib/fakeram45_128x116.lib"
+    ]
+  },
+  "note": "Graph is synthetic unless real netlist parsed. RTL/sv2v paths preserved for reproducibility."
+}
