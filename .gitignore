@@ -1,0 +1,130 @@
+# =========================
+# Python core
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# =========================
+# Package managers / tools
+# =========================
+pip-wheel-metadata/
+pip-log.txt
+poetry.lock
+Pipfile.lock
+
+# =========================
+# IDEs / editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# =========================
+# Jupyter / notebooks
+# =========================
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# =========================
+# Reinforcement Learning artifacts
+# =========================
+# Trained models / checkpoints
+checkpoints/
+models/
+weights/
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.onnx
+
+# Replay buffers
+replay_buffers/
+buffers/
+
+# =========================
+# Logs and experiment tracking
+# =========================
+logs/
+log/
+*.log
+
+# TensorBoard
+runs/
+tb_logs/
+
+# Weights & Biases
+wandb/
+
+# MLflow
+mlruns/
+
+# =========================
+# Visualizations / media outputs
+# =========================
+videos/
+recordings/
+renders/
+frames/
+plots/
+figures/
+animations/
+
+# Common media formats
+*.gif
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.webm
+
+# =========================
+# Simulation environments
+# =========================
+# OpenAI Gym / Gymnasium
+gym-results/
+monitor.csv
+
+# Mujoco / physics engines
+mujoco_logs/
+*.mjl
+
+# =========================
+# Caches / temporary files
+# =========================
+.cache/
+pytest_cache/
+*.tmp
+*.temp
+
+# =========================
+# Configuration overrides
+# =========================
+# Keep example configs, ignore local ones
+config.local.yaml
+config.local.yml
+.env.local
+
+# =========================
+# OS-specific
+# =========================
+Thumbs.db
+ehthumbs.db
