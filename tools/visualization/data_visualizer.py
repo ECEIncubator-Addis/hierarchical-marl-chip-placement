@@ -1,11 +1,10 @@
 import argparse
 import matplotlib.pyplot as plt
-import numpy as np
 import torch
 from torch_geometric.data import Data
 from torch.serialization import safe_globals
-
-
+from torch_geometric.utils import to_networkx
+import networkx as nx
 def visualize_tensor(tensor, name="tensor", batch_index=0):
     """
     Visualize a torch tensor based on its dimensionality.
@@ -51,11 +50,6 @@ def visualize_tensor(tensor, name="tensor", batch_index=0):
 
     plt.tight_layout()
     plt.show()
-import torch
-import matplotlib.pyplot as plt
-from torch_geometric.data import Data
-from torch_geometric.utils import to_networkx
-import networkx as nx
 
 
 def visualize_graph(graph: Data, name="graph"):
