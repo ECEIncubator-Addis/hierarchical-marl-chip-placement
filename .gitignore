@@ -48,7 +48,6 @@ Pipfile.lock
 # =========================
 # Trained models / checkpoints
 checkpoints/
-models/
 weights/
 *.pth
 *.ckpt
@@ -126,3 +125,6 @@ config.local.yml
 # =========================
 Thumbs.db
 ehthumbs.db
+
+
+src/data/
