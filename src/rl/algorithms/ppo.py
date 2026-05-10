@@ -10,8 +10,10 @@ import torch.nn.functional as F
 from torch.distributions import Categorical
 
 try:
+    from src.models.gnn.rl_policy import GNNHierarchicalActorCritic
     from src.rl.buffer import RolloutBuffer
 except ImportError:  # pragma: no cover - supports running from src as cwd
+    from models.gnn.rl_policy import GNNHierarchicalActorCritic
     from rl.buffer import RolloutBuffer
 
 
@@ -89,6 +91,11 @@ class PPOConfig:
     batch_size: int = 64
     hidden_dim: int = 256
     hidden_layers: int = 2
+    use_gnn_encoder: bool = False
+    gnn_hidden_channels: int = 128
+    gnn_embedding_dim: int = 256
+    gnn_layers: int = 2
+    gnn_dropout: float = 0.1
 
 
 class PPOAgent:
@@ -100,18 +107,36 @@ class PPOAgent:
         num_directions: int = 4,
         config: PPOConfig | None = None,
         device: str | torch.device = "cpu",
+        edge_index: torch.Tensor | None = None,
     ) -> None:
         self.config = config or PPOConfig()
         self.device = torch.device(device)
         self.num_directions = num_directions
         self.num_macros = num_macros or max(1, action_dim // num_directions)
-        self.model = HierarchicalActorCritic(
-            obs_dim=obs_dim,
-            num_macros=self.num_macros,
-            num_directions=num_directions,
-            hidden_dim=self.config.hidden_dim,
-            hidden_layers=self.config.hidden_layers,
-        ).to(self.device)
+        self.edge_index = edge_index.detach().cpu() if edge_index is not None else None
+        if self.config.use_gnn_encoder:
+            if edge_index is None:
+                raise ValueError("PPOConfig.use_gnn_encoder=True requires edge_index.")
+            if obs_dim % self.num_macros != 0:
+                raise ValueError(f"obs_dim {obs_dim} must be divisible by num_macros {self.num_macros}.")
+            self.model = GNNHierarchicalActorCritic(
+                num_macros=self.num_macros,
+                features_per_macro=obs_dim // self.num_macros,
+                edge_index=edge_index,
+                num_directions=num_directions,
+                hidden_channels=self.config.gnn_hidden_channels,
+                embedding_dim=self.config.gnn_embedding_dim,
+                num_layers=self.config.gnn_layers,
+                dropout=self.config.gnn_dropout,
+            ).to(self.device)
+        else:
+            self.model = HierarchicalActorCritic(
+                obs_dim=obs_dim,
+                num_macros=self.num_macros,
+                num_directions=num_directions,
+                hidden_dim=self.config.hidden_dim,
+                hidden_layers=self.config.hidden_layers,
+            ).to(self.device)
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.config.learning_rate)
 
     @torch.no_grad()
@@ -155,12 +180,14 @@ class PPOAgent:
         return metrics
 
     def save(self, path: str | Path) -> None:
+        obs_dim = getattr(self.model, "obs_dim", self.num_macros * self.model.features_per_macro)
         payload = {
             "state_dict": self.model.state_dict(),
             "config": self.config.__dict__,
             "num_macros": self.num_macros,
             "num_directions": self.num_directions,
-            "obs_dim": self.model.obs_dim,
+            "obs_dim": obs_dim,
+            "edge_index": self.edge_index,
         }
         torch.save(payload, path)
 
@@ -175,6 +202,7 @@ class PPOAgent:
             num_directions=payload["num_directions"],
             config=config,
             device=device,
+            edge_index=payload.get("edge_index"),
         )
         agent.model.load_state_dict(payload["state_dict"])
         return agent

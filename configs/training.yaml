@@ -1,0 +1,42 @@
+name: default_training
+
+experiment:
+  project: hierarchical-marl-chip-placement
+  run_name: mempool_tile_hierarchical_ppo
+  seed: 42
+  output_dir: results
+  checkpoint_dir: checkpoints
+
+data:
+  train_graphs:
+    - src/data/preprocessed/real-connection/MemPool_tile/Nangate45/MemPool_tile_Nangate45_graph.pt
+  eval_graphs:
+    - src/data/preprocessed/real-connection/MemPool_tile/Nangate45/MemPool_tile_Nangate45_graph.pt
+
+runtime:
+  device: cpu
+  num_workers: 1
+  deterministic: false
+
+schedule:
+  total_timesteps: 100000
+  rollout_steps: 2048
+  eval_frequency: 10000
+  eval_episodes: 3
+  save_frequency: 10000
+
+logging:
+  level: INFO
+  log_dir: results/logs
+  metrics_dir: results/metrics
+  placements_dir: results/placements
+  use_wandb: false
+  wandb:
+    entity: null
+    project: hierarchical-marl-chip-placement
+
+early_stopping:
+  enabled: false
+  metric: eval.mean_reward
+  patience_evaluations: 10
+  mode: max

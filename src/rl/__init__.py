@@ -1,6 +1,6 @@
 from .buffer import ReplayBuffer, RolloutBuffer
 from .evaluator import EvaluationResult, evaluate_policy, rollout_placement
-from .trainer import HierarchicalRLTrainer, TrainerConfig, train
+from .trainer import HierarchicalRLTrainer, TrainerConfig, train, train_from_yaml
 
 __all__ = [
     "EvaluationResult",
@@ -11,4 +11,5 @@ __all__ = [
     "evaluate_policy",
     "rollout_placement",
     "train",
+    "train_from_yaml",
 ]

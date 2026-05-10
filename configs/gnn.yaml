@@ -1,0 +1,43 @@
+name: macro_graph_encoder
+description: GNN encoder settings for macro placement graph features.
+
+encoder:
+  class_path: src.models.gnn.encoder.GNNEncoder
+  input_features:
+    source: graph.x
+    include_position_features: true
+    position_dim: 2
+  architecture:
+    type: graph_sage
+    message_passing: src.models.gnn.message_passing.MacroPlacementMessagePassing
+    layers: 2
+    in_channels: 6
+    hidden_channels: 128
+    out_channels: 256
+    activation: relu
+    global_pool: adaptive_avg_pool1d
+  output:
+    embedding_dim: 256
+    use_for:
+      - manager_policy
+      - worker_policy
+      - value_function
+
+training:
+  optimizer: adam
+  learning_rate: 0.0003
+  weight_decay: 0.0
+  dropout: 0.0
+  gradient_clip_norm: 0.5
+
+feature_schema:
+  macro:
+    - width
+    - height
+    - area
+    - pin_count
+    - degree
+    - cluster_or_type_id
+  edge:
+    - connectivity
+    - net_weight
