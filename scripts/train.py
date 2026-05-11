@@ -30,8 +30,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = build_parser().parse_args()
+    
     config = TrainerConfig.from_yaml(args.rl_config, args.env_config, args.training_config)
-
+    print(f"Resolved training config: {asdict(config)}")
     if args.graph_path:
         config.graph_path = str(resolve_project_path(args.graph_path))
     if args.algorithm:
@@ -50,10 +51,11 @@ def main() -> None:
         config.device = args.device
     if args.seed is not None:
         config.seed = args.seed
-
+    print(f"Final training config after applying overrides: {asdict(config)}") 
+    print("Starting training...")
     trainer = HierarchicalRLTrainer(config)
     history = trainer.train()
-
+    print(f"Training completed. History records: {len(history)}")
     final_model_path = trainer.checkpoint_dir / f"final_{config.algorithm}.pt"
     trainer.agent.save(final_model_path)
 

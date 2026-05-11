@@ -194,6 +194,7 @@ class HierarchicalRLTrainer:
         raise ValueError(f"Unsupported algorithm: {self.config.algorithm}")
 
     def train(self) -> list[dict[str, Any]]:
+        print(f"Starting training with algorithm: {self.config.algorithm.upper()} on device: {self.device}")
         if self.config.algorithm == "dqn":
             return self._train_dqn()
         return self._train_on_policy()
@@ -245,6 +246,7 @@ class HierarchicalRLTrainer:
             last_value = 0.0 if last_done else self.agent.value(observation)
             buffer.compute_returns_and_advantages(last_value=last_value, last_done=last_done)
             train_metrics = self.agent.update(buffer)
+            print(f"Step: {global_step}, Train Metrics: {train_metrics}")
             self._maybe_evaluate(global_step, train_metrics)
 
         return self.history
@@ -285,6 +287,7 @@ class HierarchicalRLTrainer:
                 episode_reward = 0.0
                 episode_length = 0
 
+            print(f"Step: {step}, Train Metrics: {train_metrics}")
             self._maybe_evaluate(step, train_metrics)
 
         return self.history
