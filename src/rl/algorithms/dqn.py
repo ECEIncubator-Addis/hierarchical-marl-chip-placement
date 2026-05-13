@@ -112,6 +112,21 @@ class DQNAgent:
                 "target": self.target.state_dict(),
                 "config": self.config.__dict__,
                 "action_dim": self.action_dim,
+                "obs_dim": self.online.net[0].in_features,
             },
             path,
         )
+
+    @classmethod
+    def load(cls, path: str | Path, device: str | torch.device = "cpu") -> "DQNAgent":
+        payload = torch.load(path, map_location=device)
+        config = DQNConfig(**payload["config"])
+        agent = cls(
+            obs_dim=payload["obs_dim"],
+            action_dim=payload["action_dim"],
+            config=config,
+            device=device,
+        )
+        agent.online.load_state_dict(payload["online"])
+        agent.target.load_state_dict(payload["target"])
+        return agent

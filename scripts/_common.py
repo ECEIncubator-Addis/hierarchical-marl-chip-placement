@@ -41,36 +41,14 @@ def load_agent(checkpoint_path: str | Path, algorithm: str, device: str = "cpu")
 
         return PPOAgent.load(checkpoint_path, device=device)
 
-    payload = torch.load(checkpoint_path, map_location=device)
-
     if algorithm == "a2c":
-        from src.rl.algorithms.a2c import A2CAgent, A2CConfig
+        from src.rl.algorithms.a2c import A2CAgent
 
-        agent = A2CAgent(
-            obs_dim=payload["obs_dim"],
-            action_dim=payload["num_macros"] * payload["num_directions"],
-            num_macros=payload["num_macros"],
-            num_directions=payload["num_directions"],
-            config=A2CConfig(**payload["config"]),
-            device=device,
-            edge_index=payload.get("edge_index"),
-        )
-        agent.model.load_state_dict(payload["state_dict"])
-        return agent
+        return A2CAgent.load(checkpoint_path, device=device)
 
     if algorithm == "dqn":
-        from src.rl.algorithms.dqn import DQNAgent, DQNConfig
+        from src.rl.algorithms.dqn import DQNAgent
 
-        action_dim = payload["action_dim"]
-        obs_dim = next(iter(payload["online"].values())).shape[1]
-        agent = DQNAgent(
-            obs_dim=obs_dim,
-            action_dim=action_dim,
-            config=DQNConfig(**payload["config"]),
-            device=device,
-        )
-        agent.online.load_state_dict(payload["online"])
-        agent.target.load_state_dict(payload["target"])
-        return agent
+        return DQNAgent.load(checkpoint_path, device=device)
 
     raise ValueError(f"Unsupported algorithm: {algorithm}")

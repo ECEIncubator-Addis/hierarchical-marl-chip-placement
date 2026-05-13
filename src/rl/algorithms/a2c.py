@@ -120,3 +120,19 @@ class A2CAgent:
             },
             path,
         )
+
+    @classmethod
+    def load(cls, path: str | Path, device: str | torch.device = "cpu") -> "A2CAgent":
+        payload = torch.load(path, map_location=device)
+        config = A2CConfig(**payload["config"])
+        agent = cls(
+            obs_dim=payload["obs_dim"],
+            action_dim=payload["num_macros"] * payload["num_directions"],
+            num_macros=payload["num_macros"],
+            num_directions=payload["num_directions"],
+            config=config,
+            device=device,
+            edge_index=payload.get("edge_index"),
+        )
+        agent.model.load_state_dict(payload["state_dict"])
+        return agent
