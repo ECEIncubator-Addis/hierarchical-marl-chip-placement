@@ -48,9 +48,7 @@ Pipfile.lock
 # =========================
 # Trained models / checkpoints
 checkpoints/
-models/
 weights/
-*.pt
 *.pth
 *.ckpt
 *.h5
@@ -90,7 +88,6 @@ animations/
 
 # Common media formats
 *.gif
-*.png
 *.jpg
 *.jpeg
 *.svg
@@ -128,3 +125,6 @@ config.local.yml
 # =========================
 Thumbs.db
 ehthumbs.db
+
+
+src/data/

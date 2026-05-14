@@ -1,0 +1,119 @@
+name: hierarchical_macro_placement_rl
+description: Hierarchical MARL setup for chip macro placement.
+
+framework:
+  type: hierarchical_actor_critic
+  default_algorithm: ppo
+  action_encoding: macro_index * num_directions + direction_index
+  levels:
+    manager:
+      role: Selects which macro should be moved.
+      policy_head: macro_head
+      action_space: discrete_macro_index
+      objective: Improve global placement quality by choosing the next macro to refine.
+    worker:
+      role: Selects how the manager-selected macro should move.
+      policy_head: direction_head
+      action_space: discrete_direction_index
+      objective: Apply local placement refinements that reduce HPWL and penalties.
+  critic:
+    role: Estimates the value of the full placement state for both hierarchy levels.
+    value_head: value_head
+
+actions:
+  num_directions: 4
+  directions:
+    0:
+      name: north
+      delta: [0.0, 0.05]
+    1:
+      name: south
+      delta: [0.0, -0.05]
+    2:
+      name: west
+      delta: [-0.05, 0.0]
+    3:
+      name: east
+      delta: [0.05, 0.0]
+  bounds:
+    low: 0.0
+    high: 1.0
+    clamp: true
+
+trainer:
+  graph_path: src/data/preprocessed/real-connection/MemPool_tile/Nangate45/MemPool_tile_Nangate45_graph.pt
+  algorithm: ppo
+  total_timesteps: 100000
+  rollout_steps: 2048
+  eval_frequency: 10000
+  eval_episodes: 3
+  seed: 42
+  device: cpu
+  checkpoint_dir: checkpoints
+  save_best_graph: true
+  num_directions: 4
+
+algorithms:
+  ppo:
+    learning_rate: 0.0003
+    gamma: 0.99
+    gae_lambda: 0.95
+    clip_range: 0.2
+    value_coef: 0.5
+    entropy_coef: 0.01
+    max_grad_norm: 0.5
+    update_epochs: 4
+    batch_size: 64
+    hidden_dim: 256
+    hidden_layers: 2
+    use_gnn_encoder: false
+    gnn_hidden_channels: 128
+    gnn_embedding_dim: 256
+    gnn_layers: 2
+    gnn_dropout: 0.1
+  a2c:
+    learning_rate: 0.0007
+    gamma: 0.99
+    gae_lambda: 0.95
+    value_coef: 0.5
+    entropy_coef: 0.01
+    max_grad_norm: 0.5
+    hidden_dim: 256
+    hidden_layers: 2
+    use_gnn_encoder: false
+    gnn_hidden_channels: 128
+    gnn_embedding_dim: 256
+    gnn_layers: 2
+    gnn_dropout: 0.1
+  dqn:
+    learning_rate: 0.0001
+    gamma: 0.99
+    batch_size: 64
+    buffer_size: 100000
+    learning_starts: 1000
+    train_frequency: 4
+    target_update_frequency: 1000
+    epsilon_start: 1.0
+    epsilon_final: 0.05
+    epsilon_decay_steps: 50000
+    hidden_dim: 256
+    hidden_layers: 2
+    max_grad_norm: 10.0
+
+active_algorithm_config:
+  learning_rate: 0.0003
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  value_coef: 0.5
+  entropy_coef: 0.01
+  max_grad_norm: 0.5
+  update_epochs: 4
+  batch_size: 64
+  hidden_dim: 256
+  hidden_layers: 2
+  use_gnn_encoder: false
+  gnn_hidden_channels: 128
+  gnn_embedding_dim: 256
+  gnn_layers: 2
+  gnn_dropout: 0.1

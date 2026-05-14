@@ -1,0 +1,41 @@
+[project]
+
+name = "hierarchical-marl-chip-placement"
+authors = [{ name = "quantap" }, { name = "waleTg" }]
+version = "0.1.0"
+description = "GNN + Hierarchical MARL for VLSI Macro Placement"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+
+dependencies = [
+    "gymnasium>=1.2.3",
+    "h5py>=3.16.0",
+    "matplotlib>=3.10.9",
+    "networkx>=3.6.1",
+    "numpy>=2.4.4",
+    "pandas>=3.0.2",
+    "pyyaml>=6.0.3",
+    "scipy>=1.17.1",
+    "seaborn>=0.13.2",
+    "stable-baselines3>=2.8.0",
+    "torch>=2.4.0",             # lowered a bit (2.11 doesn't exist)
+    "torch-geometric>=2.6.0",
+    "tqdm>=4.67.3",
+    "wandb>=0.26.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "black>=24.0", "ruff>=0.9", "pre-commit"]
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["hierarchical_marl_chip_placement*"]
+namespaces = false
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.dynamic]
+version = { attr = "hierarchical_marl_chip_placement.__version__" }
